@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Feeding Machine Remote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cat Feeding Machine Controller</h2>
+        <img src="cat-image.jpg" alt="Cat" width="100%" style="max-width: 300px; margin-bottom: 20px;"> <!-- Assuming you have a cat image named cat-image.jpg -->
+
+        <div class="status">Food Status: <span id="foodStatus">0%</span></div>
+        <div class="status">Water Status: <span id="waterStatus">0%</span></div>
+
+        <button class="button" onclick="updateFirebase('add_food', 1)">Add Food</button>
+        <button class="button" onclick="updateFirebase('add_water', 1)">Add Water</button>
+    </div>
+
+    <script>
+        const databaseURL = 'https://cats-cdd9a-default-rtdb.firebaseio.com/';
+
+        function updateFirebase(path, data) {
+            const fullURL = databaseURL + path + '.json';
+            fetch(fullURL, {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
