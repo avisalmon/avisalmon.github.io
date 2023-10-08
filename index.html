@@ -54,7 +54,13 @@
 }
 
     // Fetch water status when the page loads
-    window.onload = fetchWaterStatus;
+    window.onload = function() {
+    // Fetch once immediately
+    fetchWaterStatus();
+
+    // Set up interval to fetch every 3 seconds
+    setInterval(fetchWaterStatus, 5000);
+}
     </script>
 </body>
 </html>
