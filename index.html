@@ -11,7 +11,7 @@
         <h2>Cat Feeding Machine Controller</h2>
         <img src="cats.jpg" alt="Cat" width="100%" style="max-width: 300px; margin-bottom: 20px;"> <!-- Assuming you have a cat image named cat-image.jpg -->
 
-        <div class="status">Food Status: <span id="foodStatus">0%</span></div>
+        <div class="status">Food Status: <span id="foodStatus">עוד לא%</span></div>
         <div class="status">Water Status: <span id="waterStatus">0%</span></div>
 
         <button class="button" onclick="updateFirebase('add_food', 1)">Add Food</button>
@@ -38,6 +38,23 @@
                 console.error('Error:', error);
             });
         }
+
+        function fetchWaterStatus() {
+    const fullURL = databaseURL + 'water_status.json';
+
+    fetch(fullURL)
+        .then(response => response.json())
+        .then(data => {
+            // Update the water status in the HTML
+            document.getElementById('waterStatus').innerText = data + '%';
+        })
+        .catch(error => {
+            console.error('Error fetching water status:', error);
+        });
+}
+
+    // Fetch water status when the page loads
+    window.onload = fetchWaterStatus;
     </script>
 </body>
 </html>
